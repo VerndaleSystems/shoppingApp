@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"
-import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
+import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
 
 const appSettings = {
     databaseURL: "https://shoppingapp-694b6-default-rtdb.europe-west1.firebasedatabase.app/"
@@ -15,10 +15,18 @@ const shoppingListEl = document.getElementById("shopping-list")
 
 
 onValue(shoppingListInDB, function(snapshot) {
-    let dbArray = Object.values(snapshot.val())
-    clearShoppingListEl(shoppingListEl)
-    for (let i = 0; i < dbArray.length; i++)
-    addItemToShoppingList(shoppingListEl, dbArray[i])
+    if (snapshot.exists()){
+        let dbArray = Object.entries(snapshot.val())
+
+        clearShoppingListEl(shoppingListEl)
+
+        for (let i = 0; i < dbArray.length; i++){
+            addItemToShoppingList(shoppingListEl, dbArray[i])
+        }
+    } else {
+        shoppingListEl.innerHTML = "Your shopping list is empty"
+    }
+    
 })
 
 
@@ -30,8 +38,20 @@ addButtonEl.addEventListener("click", function() {
 })
 
 
-function addItemToShoppingList(shoppingList, inputValue){
-    shoppingList.innerHTML += `<li>${inputValue}</li>`
+function addItemToShoppingList(listEl, item){
+    let itemID = item[0]
+    let itemValue = item[1]
+    //let dbLocationName = listEl.id
+    
+    let newEl = document.createElement("li")
+    newEl.textContent = itemValue
+
+    newEl.addEventListener('click', function(){
+        let exactLocationInDB = ref(database, `shoppingList/${itemID}`)
+        remove(exactLocationInDB)
+    })
+
+    listEl.append(newEl)
 }
 
 

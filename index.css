@@ -11,6 +11,7 @@
     --contrast: ;
     
     --main-text-color: var(--primary);
+    --text-muted: #653b09;
     --text-lighter: ;
     --bg-muted: ;
     --bg-contrast: ;
@@ -19,7 +20,7 @@
     --nav-btn: ;
 
     --btn-primary-bg: var(--primary);
-    --btn-prim-hover: ;
+    --btn-prim-hover: #11a625;
     --btn-secondary: ;
     --btn-sec-hover: ;
 
@@ -33,7 +34,8 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: 'Rubik', sans-serif;
-    background-color: #EEF0F4;
+    background-color: #f9f3de;
+    user-select: none;
 }
 
 .container {
@@ -77,13 +79,18 @@ input:focus {
 
 button {
     color: #FDFDFD;
-    background-color: var(--btn-primary-bg);
+    background-color:var(--btn-primary-bg);
     border: 0;
     padding: 15px;
     border-radius: 8px;
     font-size: 20px;
     text-align: center;
     font-family: 'Rubik', sans-serif;
+}
+
+button:hover {
+    background-color: var(--btn-prim-hover);
+    cursor: pointer;
 }
 
 
@@ -106,8 +113,13 @@ button {
     border-radius: 8px;
     padding: 15px;
     flex-grow: 1;
-    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2)
-    /* margin: 2px; */
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+    color: var(--text-muted);
+    background-color: white;
+  }
+
+  #shopping-list li:hover {
+    background-color: #c4f6ca;
   }
 
 #shopping-list li::first-letter {
